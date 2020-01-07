@@ -4,7 +4,17 @@ local ADDON_FOLDER = debug.getinfo(1,"S").source:sub(2,-37)
 local GROUP_INFO = {
 	Global = "Global functions. These can be called without any class.",
 	CBaseEntity = "The base class for stuff",
+	CDOTA_PlayerResource = "''Global accessor variable:'' <code>PlayerResource</code>",
+	CDOTAGamerules = "''Global accessor variable:'' <code>GameRules</code>",
+	CDOTATutorial = "''Global accessor variable:'' <code>Tutorial</code>",
 	CEntities = "''Global accessor variable:'' <code>Entities</code>",
+	Convars = "''Global accessor variable:'' <code>ConVars</code>",
+	CScriptHeroList = "''Global accessor variable:'' <code>HeroList</code>",
+	CScriptParticleManager = "''Global accessor variable:'' <code>ParticleManager</code>",
+	Vector = "''Global accessor variable:'' <code>Vector(x,y,z)</code>",
+	CCustomGameEventManager = "''Global accessor variable:'' <code>CustomGameEventManager</code>",
+	CCustomNetTableManager = "''Global accessor variable:'' <code>CustomNetTables</code>",
+	CDOTA_CustomUIManager = "''Global accessor variable:'' <code>CustomUI</code>",
 }
 
 
@@ -23,8 +33,9 @@ end
 
 
 function Activate()
-	DumpScriptBindings()
-	wikiCreator()
+	-- DumpScriptBindings()
+	for k,v in pairs(debug.getinfo(_G.PlayerResource.__self)) do print(k,v) end
+	-- wikiCreator()
 end
 
 function wikiCreator()
@@ -40,7 +51,7 @@ function wikiCreator()
 end
 
 function generateGroup(groupName,desc) -- returns wiki string
-	local extendedClass = getmetatable( desc ) and getmetatable( desc ).__index
+	local extendedClass = getmetatable( _G[groupName] ) and getmetatable( _G[groupName] ).__index
 	local extendedClassName = "" for k,v in pairs(_G.CDesc) do if extendedClass==v then extendedClassName=k end end
 	local out = string.format("=== %s ===\n",groupName)
 	if extendedClass then
