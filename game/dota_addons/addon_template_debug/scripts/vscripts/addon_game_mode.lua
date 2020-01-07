@@ -107,18 +107,18 @@ function generateConstGroup(groupName,desc)
 	out = out.."{| class=\"standard-table\" style=\"width: 50%;\"\n! Name \n! Value \n! Description \n"
 	forOrdered(desc,function(funcName,userd)
 		out = string.format("%s|-\n",out)
-		out = string.format("%s| [[Dota 2 Workshop Tools/Scripting/API/%s.%s | %s]] \n",out,groupName,funcName,funcName)
-		-----
-		local parameterList = {}
-		for i = 0, #userd-1 do
-			local prmType, prmName = unpack( userd[i] )
-			if prmName == nil or prmName == "" then prmName = string.format( "%s_%d", prmType, i+1 ) end
-			table.insert(parameterList,string.format("%s %s",prmType,prmName))
-		end
-		local fullFuncString = string.format("%s(%s)",funcName,table.concat(parameterList,", "))
-		----
-		out = string.format("%s| <code>%s %s </code>\n",out,userd.returnType,fullFuncString)
-		out = string.format("%s| %s \n",out,userd.desc or "No Description Set")
+		-- out = string.format("%s| [[Dota 2 Workshop Tools/Scripting/API/%s.%s | %s]] \n",out,groupName,funcName,funcName)
+		-- -----
+		-- local parameterList = {}
+		-- for i = 0, #userd-1 do
+		-- 	local prmType, prmName = unpack( userd[i] )
+		-- 	if prmName == nil or prmName == "" then prmName = string.format( "%s_%d", prmType, i+1 ) end
+		-- 	table.insert(parameterList,string.format("%s %s",prmType,prmName))
+		-- end
+		-- local fullFuncString = string.format("%s(%s)",funcName,table.concat(parameterList,", "))
+		-- ----
+		-- out = string.format("%s| <code>%s %s </code>\n",out,userd.returnType,fullFuncString)
+		-- out = string.format("%s| %s \n",out,userd.desc or "No Description Set")
 	end)
 	out = out.."|}\n\n"
 	return out
