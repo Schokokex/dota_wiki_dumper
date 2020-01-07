@@ -1,13 +1,13 @@
 local ADDON_FOLDER = debug.getinfo(1,"S").source:sub(2,-37)
 
 
-
 function forOrdered(t,hFunc)
 	if "table"~=type(t) then return end
 	local keys = {}
 	for k in pairs(t) do
 		table.insert(keys,k)
 	end
+	table.sort(keys)
 	for _,k in ipairs(keys) do
 		local v = t[k]
 		hFunc(k,v)
@@ -17,6 +17,7 @@ end
 
 function Activate()
 	dumpGlobals()
+	wikiCreator()
 end
 
 
@@ -26,7 +27,7 @@ function dumpGlobals()
 	local file1
 	local file2
 	function printDump(path,t)
-		print(path,type(t),t)
+		-- print(path,type(t),t)
 		file1:write(path.." "..type(t).." "..tostring(t).."\n")
 		if "userdata"==type(t) then
 			-- local a = string.gsub(tostring(t),"\n","YOLO")
@@ -72,15 +73,16 @@ function wikiCreator()
 	function subPage(tab,preText,groupname)
 		file:write(preText)
 		forOrdered(tab,function(funcName,desc)
-			local descParsed = string.gsub(desc,"\n","</code>\n| ")
+			local descParsed = string.gsub(tostring(desc),"\n","</code>\n| ")
 			file:write("|-\n| [[Dota 2 Workshop Tools/Scripting/API/"..groupname.."."..funcName.." | "..funcName.."]]\n")
-			file:write("| <code>"..descParsed)
+			file:write("| <code>"..descParsed.."\n")
 		end)
+		file:write("|}\n")
 	end
 	
 	subPage(
 		_G.FDesc,
-		"=== Global ===\n''Global functions.  These can be called without any class''\"{| class=\"standard-table\" style=\"width: 100%;\"\n! Function \n! Signature \n! Description \n",
+		"=== Global ===\n''Global functions.  These can be called without any class''\n{| class=\"standard-table\" style=\"width: 100%;\"\n! Function \n! Signature \n! Description \n",
 		"Global"
 	)
 
