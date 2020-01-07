@@ -4,20 +4,23 @@ local ADDON_FOLDER = debug.getinfo(1,"S").source:sub(2,-37)
 local GROUP_INFO = {
 	Global = "Global functions. These can be called without any class.",
 	CBaseEntity = "The base class for stuff",
-	CDOTA_PlayerResource = "''Global accessor variable:'' <code>PlayerResource</code>",
-	CDOTAGamerules = "''Global accessor variable:'' <code>GameRules</code>",
-	CDOTATutorial = "''Global accessor variable:'' <code>Tutorial</code>",
-	CEntities = "''Global accessor variable:'' <code>Entities</code>",
-	Convars = "''Global accessor variable:'' <code>ConVars</code>",
-	CScriptHeroList = "''Global accessor variable:'' <code>HeroList</code>",
-	CScriptParticleManager = "''Global accessor variable:'' <code>ParticleManager</code>",
-	Vector = "''Global accessor variable:'' <code>Vector(x,y,z)</code>",
-	CCustomGameEventManager = "''Global accessor variable:'' <code>CustomGameEventManager</code>",
-	CCustomNetTableManager = "''Global accessor variable:'' <code>CustomNetTables</code>",
-	CDOTA_CustomUIManager = "''Global accessor variable:'' <code>CustomUI</code>",
+	CDOTA_PlayerResource = "Global accessor variable: <code>PlayerResource</code>",
+	CDOTAGamerules = "Global accessor variable: <code>GameRules</code>",
+	CDOTATutorial = "Global accessor variable: <code>Tutorial</code>",
+	CEntities = "Global accessor variable: <code>Entities</code>",
+	Convars = "Global accessor variable: <code>ConVars</code>",
+	CScriptHeroList = "Global accessor variable: <code>HeroList</code>",
+	CScriptParticleManager = "Global accessor variable: <code>ParticleManager</code>",
+	Vector = "Global accessor variable: <code>Vector(x,y,z)</code>",
+	CCustomGameEventManager = "Global accessor variable: <code>CustomGameEventManager</code>",
+	CCustomNetTableManager = "Global accessor variable: <code>CustomNetTables</code>",
+	CDOTA_CustomUIManager = "Global accessor variable: <code>CustomUI</code>",
 }
 
 local userInfo = {
+	Global = {
+		GetDedicatedServerKeyV2 = "used in https://github.com/dota2unofficial/12v12/blob/master/game/scripts/vscripts/common/webapi.lua",
+	},
 	CBaseEntity = {
 		GetAbsOrigin = "Returns the position of the entity on the map. Very Useful!",
 	},
@@ -52,7 +55,7 @@ function wikiCreator()
 	local file = io.open(ADDON_FOLDER.."dumpWiki.txt","w")
 	
 	file:write(preWiki)
-	
+	file:write("\n=== Functions ===\n\n")
 	file:write(generateClassGroup("Global",_G.FDesc))
 
 	forOrdered(_G.CDesc,function(className,class)
@@ -76,7 +79,7 @@ end
 function generateClassGroup(groupName,desc) -- returns wiki string
 	local extendedClass = getmetatable( _G[groupName] ) and getmetatable( _G[groupName] ).__index
 	local extendedClassName = "" for k,v in pairs(_G.CDesc) do if extendedClass==v then extendedClassName=k end end
-	local out = string.format("=== %s ===\n",groupName)
+	local out = string.format("==== %s ====\n",groupName)
 	if extendedClass and extendedClass~=_G[groupName] then
 		out = string.format("%s:::::extends [[#%s|%s]]\n",out,extendedClassName,extendedClassName)
 	end
