@@ -21,7 +21,7 @@ local userInfo = {
 	Global = {
 		GetDedicatedServerKeyV2 = "used in https://github.com/dota2unofficial/12v12/blob/master/game/scripts/vscripts/common/webapi.lua",
 		ApplyDamage = "ApplyDamage({victim = {}, attacker = {}, damage = 0, damage_type = DAMAGE_TYPE_MAGICAL, damage_flags = DOTA_DAMAGE_FLAG_IGNORES_MAGIC_ARMOR, ability = {}})",
-	}
+	},
 	CBaseEntity = {
 		GetAbsOrigin = "Returns the position of the entity on the map. Very Useful!",
 	},
